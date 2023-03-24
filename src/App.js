@@ -1,17 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
-import { Route, Routes } from "react-router-dom";
-import Home from "./Components/Home";
-import Login from "./Components/Login";
-import Register from "./Components/Register";
-import Navbaar from "./Components/Navbaar";
-import Overview from "./Components/Overview";
-import EditProduct from "./Components/EditProduct";
-import AddProduct from "./Components/AddProduct";
-import Dropdown from "./Components/Dropdown";
-import Card from "./Components/Card";
-import Orderdetail from "./Components/Orderdetail";
-import Inventory from "./Components/Inventory";
+import logo from "./logo.svg";
+import "./App.css";
+
 function App() {
   return (
     <div className="App">
