@@ -84,3 +84,4 @@ const Register = () => {
   );
 };
 export default Register;
+//container,signup,input,btn,login_link

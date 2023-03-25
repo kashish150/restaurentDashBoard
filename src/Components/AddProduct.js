@@ -48,6 +48,5 @@ return (
     </>    
   )
 }
-
-
 export default AddProduct ;
+//form ,add ,add_inp,add_input,additem

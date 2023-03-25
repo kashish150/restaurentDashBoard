@@ -16,7 +16,7 @@ const EditProduct = () =>{
     }, []) 
     
     const navigate =useNavigate();
-    const update =(e)=>{
+    const handleupdate =(e)=>{
         e.preventDefault();
       axios.put(`https://641c518a1a68dc9e460658c7.mockapi.io/Zomato_Resturant/${id}`,{
      id: id
@@ -39,7 +39,7 @@ return(
       <option>Veg</option>
       <option>Non-Veg</option>
     </select><br></br>
-    <button id="edit_btn" onClick={update}>Save Changes</button>
+    <button id="edit_btn" onClick={handleupdate}>Save Changes</button>
   </form>
 </div> 
 
@@ -47,3 +47,4 @@ return(
 
 }
 export default EditProduct;
+//form ,add ,add_inp,add_input,edit_btn

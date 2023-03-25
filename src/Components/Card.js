@@ -22,3 +22,4 @@ const Card = () =>{
   )
 }
 export default Card;
+//order,card_body,Upper_data,rating,price,lower_data,accept,reject

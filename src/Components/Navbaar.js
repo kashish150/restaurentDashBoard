@@ -15,3 +15,4 @@ const Navbaar = () => {
 }
 
 export default Navbaar ;
+//navbaar ,homelink,productlink,editlink,link1,link2,links,navhome,navadd,navedit,navlogin,navregister
