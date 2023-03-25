@@ -14,7 +14,7 @@ const AddProduct = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("clicked");
-    axios.post("https://641c518a1a68dc9e460658c7.mockapi.io/Zomato_Resturant",{
+    axios.post("https://641c518a1a68dc9e460658c7.mockapi.io/Resturant",{
       id  :id,
       dish : dish,
       price : price,

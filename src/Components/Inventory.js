@@ -7,7 +7,7 @@ const Inventory = () => {
   const [data, setData] = useState([]);
   function getData() {
     axios
-      .get("https://641c518a1a68dc9e460658c7.mockapi.io/Zomato_Resturant")
+      .get("https://641c518a1a68dc9e460658c7.mockapi.io/Resturant")
       .then((res) => {
         console.log(res.data);
         setData(res.data);
