@@ -240,3 +240,6 @@ cursor:pointer;}
   cursor:pointer;
 }
 
+.flex{
+  display: flex;
+}

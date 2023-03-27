@@ -1,52 +1,117 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useNavigate ,NavLink } from "react-router-dom";
-import Inventory from "./Inventory";
-
+import { useNavigate, NavLink } from "react-router-dom";
+// import Inventory from "./Inventory";
+import EditProductCards from "./EditProductCards";
 const AddProduct = () => {
-  const [id, setId] = useState("");
-  const [dish, setDish] = useState("");
-  const [price, setPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [imageUrl, setimageUrl] = useState("");
+  const [name, setname] = useState("");
+  const [description, setdescription] = useState("");
+  const [quantityAvailable, setquantityAvailable] = useState(0);
+  const [pricePerQuantity, setpricePerQuantity] = useState(0);
+  const [orders, setaOrders] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3000/api/product/getAllProducts/${"64142a494d532e7558195d1c"}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setaOrders(res.data);
+      });
+  }, []);
 
-  const history =useNavigate();
-  const header={"Access-Control-Allow-Origin": "*"};
+  const history = useNavigate();
+  const header = { "Access-Control-Allow-Origin": "*" };
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("clicked");
-    axios.post("https://641c518a1a68dc9e460658c7.mockapi.io/Resturant",{
-      id  :id,
-      dish : dish,
-      price : price,
-      category :category,
-       })
-    .then(() => {
-      history("/inventory");
-    });
+    axios
+      .post("http://localhost:3000/api/product/addProducts", {
+        restaurent: "64142a494d532e7558195d1c",
+        imageUrl: imageUrl,
+        name: name,
+        description: description,
+        quantityAvailable: quantityAvailable,
+        pricePerQuantity: pricePerQuantity,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
-return (
-  <>
-    <div className='Form'>
-      <h1 id="add">Add Product </h1>
-      <form><label className='add_input'><b>Product ID</b></label>
-        <input type="number" className='add_inp'name="id" onChange={(e)=> setId(e.target.value)}/><br></br>
-        <label className='add_input'><b>Dish Name</b></label>
-        <input type="text" className='add_inp' name="dish" onChange={(e)=> setDish(e.target.value)}/><br></br>
-        <label className='add_input'> <b>Price</b> </label>
-        <input type="number" className='add_inp' name="price" onChange={(e)=> setPrice(e.target.value)}/><br></br>
-        <label className='add_input'> <b>Food Type</b> </label>
-        <select className='add_inp' id="select" name="category" onChange={(e)=> setCategory(e.target.value)}><br></br>
-          <option>Veg</option>
-          <option>Non-Veg</option>
-        </select><br></br>
- <button type="submit" id="additem" onClick={handlesubmit}> Add Dish </button> 
-      </form>
-    </div>
-    <div className="inventory">
-    <Inventory/>
-    </div>
-    </>    
-  )
-}
-export default AddProduct ;
-//form ,add ,add_inp,add_input,additem
+  return (
+    <>
+      <div className="Form">
+        <h1 id="add">Add Product </h1>
+        <form>
+          <label className="add_input">
+            <b>Dish Name</b>
+          </label>
+          <input
+            type="text"
+            className="add_inp"
+            name="dish"
+            onChange={(e) => setname(e.target.value)}
+          />
+          <br></br>
+          <label className="add_input">
+            {" "}
+            <b>Price</b>{" "}
+          </label>
+          <input
+            type="number"
+            className="add_inp"
+            name="price"
+            onChange={(e) => setpricePerQuantity(e.target.value)}
+          />
+          <br></br>
+          <label className="add_input">
+            <b>Quantity</b>
+          </label>
+          <input
+            type="text"
+            className="add_inp"
+            name="quantity"
+            onChange={(e) => setquantityAvailable(e.target.value)}
+          />
+          <br></br>
+          <label className="add_input">
+            <b>Description</b>
+          </label>
+          <input
+            type="text"
+            className="add_inp"
+            name="quantity"
+            onChange={(e) => setdescription(e.target.value)}
+          />
+          <br></br>
+          <label className="add_input">
+            <b>Image</b>
+          </label>
+          <input
+            type="text"
+            className="add_inp"
+            name="quantity"
+            onChange={(e) => setimageUrl(e.target.value)}
+          />
+          <br></br>
+
+          <button type="submit" id="additem" onClick={handlesubmit}>
+            SUBMIT
+          </button>
+        </form>
+      </div>
+      <div className="inventory">
+        products
+        {orders.length > 0 ? (
+          orders.map((order) => {
+            return <EditProductCards order={order} />;
+          })
+        ) : (
+          <div> EMPTY ARRAY</div>
+        )}
+      </div>
+    </>
+  );
+};
+export default AddProduct;

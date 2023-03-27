@@ -1,23 +1,43 @@
-import React from 'react' ;
-import DropDown from './Dropdown';
-import Card from './Card';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import Card from "./Card";
 import Orderdetail from "./Orderdetail";
 const Overview = () => {
-  return (
-    <div className='overview'>
-      <span> <h2> Welcome Back La-Pinoz-Pizza </h2> </span>
-      <hr></hr>
-      <div className='left_align'>
-      <h2 className='orderhead'> <b> <i>New Orders</i></b></h2> <br></br>
-      <Card/>
-      </div>
-      <div className='dropdownc'>
-      <DropDown/>
-      </div>
-    
-    </div>
-  )
-}
+  const [orders, setorder] = useState([]);
+  useEffect(() => {
+    axios
+      .get(
+        `http://localhost:3000/api/order/getRestaurentOrders/${"64142a494d532e7558195d1c"}`
+      )
+      .then((res) => {
+        console.log(res.data);
+        setorder(res.data);
+      });
+  }, []);
 
-export default Overview ;
+  return (
+    <div>
+      <span>
+        <h2> Welcome Back La-Pinoz-Pizza </h2>
+      </span>
+      <hr></hr>
+      <div>
+        <h2>New Orders</h2>
+        <br></br>
+        {orders.length > 0 ? (
+          <div>
+            {orders.map((order) => {
+              console.log(order);
+              return <Card order={order} />;
+            })}
+          </div>
+        ) : (
+          <div>Empty</div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default Overview;
 //overview,orderhead,dropdownc,left_align
