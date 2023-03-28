@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 // import Inventory from "./Inventory";
 import EditProductCards from "./EditProductCards";
+import Cookies from "js-cookie";
+
 const AddProduct = () => {
   const [imageUrl, setimageUrl] = useState("");
   const [name, setname] = useState("");
@@ -10,11 +12,14 @@ const AddProduct = () => {
   const [quantityAvailable, setquantityAvailable] = useState(0);
   const [pricePerQuantity, setpricePerQuantity] = useState(0);
   const [orders, setaOrders] = useState([]);
+
   useEffect(() => {
+    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+      Cookies.get("token")
+    );
+    const token = JSON.parse(Cookies.get("token"));
     axios
-      .get(
-        `http://localhost:3000/api/product/getAllProducts/${"64142a494d532e7558195d1c"}`
-      )
+      .get(`http://localhost:3000/api/product/getAllProducts/`)
       .then((res) => {
         console.log(res.data);
         setaOrders(res.data);
@@ -26,9 +31,11 @@ const AddProduct = () => {
   const handlesubmit = (e) => {
     e.preventDefault();
     console.log("clicked");
+    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+      Cookies.get("token")
+    );
     axios
       .post("http://localhost:3000/api/product/addProducts", {
-        restaurent: "64142a494d532e7558195d1c",
         imageUrl: imageUrl,
         name: name,
         description: description,

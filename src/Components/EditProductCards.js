@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 const EditProductCards = (props) => {
   const [imageUrl, setimageUrl] = useState("");
   const [name, setname] = useState("");
@@ -9,8 +10,11 @@ const EditProductCards = (props) => {
   const [pricePerQuantity, setpricePerQuantity] = useState(0);
   function handlesavechanges(order) {
     console.log(order);
+    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+      Cookies.get("token")
+    );
     axios
-      .put(`http://localhost:3000/api/product/updateProducts/${order._id}`, {
+      .put(`http://localhost:3000/api/product/updateProducts`, {
         imgUrl: imageUrl.length > 0 ? imageUrl : order.imageUrl,
         name: name.length > 0 ? name : order.name,
         description: description.length > 0 ? description : order.description,

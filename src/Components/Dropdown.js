@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Select from "react-select";
 import { useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Dropdown = [
   { label: "Not_processed", value: "Not_processed" },
@@ -14,11 +15,13 @@ const Dropdown = [
 const DropDown = (props) => {
   const setoutput = (status) => {
     console.log(status);
-    // console.log("called1212");
+    console.log(Cookies.get("jwttoken"));
+    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+      Cookies.get("token")
+    );
     axios
       .post("http://localhost:3000/api/order/updateStatus", {
         orderId: props.order._id,
-        restaurentId: props.order.restaurent,
         status: status,
       })
       .then((res) => {

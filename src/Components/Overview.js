@@ -1,14 +1,17 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import Cookies from "js-cookie";
 import Orderdetail from "./Orderdetail";
 const Overview = () => {
   const [orders, setorder] = useState([]);
   useEffect(() => {
+    // console.log(JSON.parse(Cookies.get("token")));
+    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+      Cookies.get("token")
+    );
     axios
-      .get(
-        `http://localhost:3000/api/order/getRestaurentOrders/${"64142a494d532e7558195d1c"}`
-      )
+      .get(`http://localhost:3000/api/order/getRestaurentOrders`)
       .then((res) => {
         console.log(res.data);
         setorder(res.data);

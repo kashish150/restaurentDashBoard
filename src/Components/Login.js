@@ -1,13 +1,31 @@
 import React from "react";
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
-
+import Cookies from "js-cookie";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   //for getting value that what user put we have to use hook!!
+  const navigate = useNavigate();
+
   const [inpval, setinp] = useState({
     email: "",
     password: "",
   });
+  function handleLogin() {
+    axios
+      .post("http://localhost:3000/api/restaurent/login", {
+        username: "f11212erewfwefew@gmail.com",
+        email: "werdffdwefw@gmail.com",
+        password: "ererrer",
+        restuarentName: "kashish babbar",
+        phoneNumber: "8950010348",
+      })
+      .then((res) => {
+        Cookies.set("token", JSON.stringify(res.data.token));
+        console.log(res.data);
+        navigate("/overview");
+      });
+  }
 
   const setData = (e) => {
     console.log(e.target.value);
@@ -51,9 +69,14 @@ const Login = () => {
               required
             />
             <br />{" "}
-            <NavLink to="/overview"><button type="submit" id="btn" >
-              {" "}Login
-              </button> </NavLink>
+            <button
+              id="btn"
+              onClick={() => {
+                handleLogin();
+              }}
+            >
+              Login
+            </button>
             <p>
               Don't have an account ?{" "}
               <a href="/register" id="register_link">
