@@ -12,21 +12,25 @@ const AddProduct = () => {
   const [quantityAvailable, setquantityAvailable] = useState(0);
   const [pricePerQuantity, setpricePerQuantity] = useState(0);
   const [orders, setaOrders] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
-    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
-      Cookies.get("token")
-    );
-    const token = JSON.parse(Cookies.get("token"));
-    axios
-      .get(`http://localhost:3000/api/product/getAllProducts/`)
-      .then((res) => {
-        console.log(res.data);
-        setaOrders(res.data);
-      });
+    console.log("token");
+    console.log(Cookies.get("token"));
+    if (Cookies.get("token") === undefined) {
+      navigate("/login");
+    } else {
+      axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+        Cookies.get("token")
+      );
+      const token = JSON.parse(Cookies.get("token"));
+      axios
+        .get(`http://localhost:3000/api/product/getAllProducts/`)
+        .then((res) => {
+          console.log(res.data);
+          setaOrders(res.data);
+        });
+    }
   }, []);
-
-  const history = useNavigate();
   const header = { "Access-Control-Allow-Origin": "*" };
   const handlesubmit = (e) => {
     e.preventDefault();

@@ -2,20 +2,31 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import Cookies from "js-cookie";
-import Orderdetail from "./Orderdetail";
+import { useNavigate } from "react-router-dom";
+
 const Overview = () => {
   const [orders, setorder] = useState([]);
+  const navigate = useNavigate();
   useEffect(() => {
-    // console.log(JSON.parse(Cookies.get("token")));
-    axios.defaults.headers.common["x-auth-token"] = JSON.parse(
-      Cookies.get("token")
-    );
-    axios
-      .get(`http://localhost:3000/api/order/getRestaurentOrders`)
-      .then((res) => {
-        console.log(res.data);
-        setorder(res.data);
-      });
+    if (Cookies.get("token") === undefined) {
+      navigate("/login");
+    } else {
+      const token = Cookies.get("token");
+
+      if (!token) {
+        navigate("/login");
+      }
+
+      axios.defaults.headers.common["x-auth-token"] = JSON.parse(
+        Cookies.get("token")
+      );
+      axios
+        .get(`http://localhost:3000/api/order/getRestaurentOrders`)
+        .then((res) => {
+          console.log(res.data);
+          setorder(res.data);
+        });
+    }
   }, []);
 
   return (

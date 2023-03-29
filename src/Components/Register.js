@@ -1,8 +1,29 @@
 import React from "react";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
+
 const Register = () => {
   //for getting value that what user put we have to use hook!!
+  const navigate = useNavigate();
+  function handleLogin() {
+    axios
+      .post("http://localhost:3000/api/restaurent/newrestaurent", {
+        username: "f11212erewfwefew@gmail.com",
+        email: "werdffdwemananmanmafw@gmail.com",
+        password: "ererrer",
+        restuarentName: "kashish babbar",
+        phoneNumber: "8950010348",
+      })
+      .then((res) => {
+        console.log("checkrjfnrfjk");
+        Cookies.set("token", JSON.stringify(res.data.token));
+        console.log(res.data);
+        navigate("/overview");
+      });
+  }
 
   const [inpval, setinp] = useState({
     name: "",
@@ -36,7 +57,8 @@ const Register = () => {
               placeholder="Username"
               name="name"
               required
-            /><br></br>
+            />
+            <br></br>
             <input
               className="input"
               type="number"
@@ -45,7 +67,8 @@ const Register = () => {
               placeholder="Contact"
               name="contact"
               required
-            /><br></br>
+            />
+            <br></br>
             <input
               className="input"
               type="email"
@@ -54,7 +77,8 @@ const Register = () => {
               placeholder="e-mail"
               name="email"
               required
-            /><br></br>
+            />
+            <br></br>
             <input
               className="input"
               type="password"
@@ -65,12 +89,9 @@ const Register = () => {
               required
             />
             <br />{" "}
-            <NavLink to = "/overview">
-            <button type="submit" id="btn">
-              {" "}
-                Register{" "}
+            <button id="btn" onClick={handleLogin}>
+              Register
             </button>
-            </NavLink>
             <p>
               Already have an account?{" "}
               <a id="login_link" href="/login">
@@ -84,4 +105,3 @@ const Register = () => {
   );
 };
 export default Register;
-//container,signup,input,btn,login_link
